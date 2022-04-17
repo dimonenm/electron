@@ -1,4 +1,6 @@
-import { app, screen, BrowserWindow, Menu, MenuItem } from 'electron';
+import { app, screen, BrowserWindow, Menu, MenuItem, Tray } from 'electron';
+import path from 'path';
+import icon from '013 trayTemplate.png';
 
 // const lock = app.releaseSingleInstanceLock();
 // console.log('lock: ', lock);
@@ -13,6 +15,7 @@ import { app, screen, BrowserWindow, Menu, MenuItem } from 'electron';
 //     }
 //   })
 // }
+
 const template = [
   {
     label: 'File',
@@ -88,7 +91,44 @@ const createMenu = () => {
   Menu.setApplicationMenu(menu);
 }
 
-const createWindow = () => {
+// const createWindow = () => {
+//   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
+//   let win = new BrowserWindow({
+//     width: 800,
+//     height: 600,
+//     minWidth: 400,
+//     minHeight: 400,
+//     maxWidth: width,
+//     maxHeight: height,
+//     show: false,
+//     // titleBarStyle: "hidden",
+//     // titleBarOverlay: {
+//     //   color: 'cadetblue',
+//     //   symbolColor: '#000000'
+//     // },
+//     webPreferences: {
+//       nodeIntegration: true,
+//       contextIsolation: false,
+//       enableRemoteModule: true,
+//     }
+//   })
+//   win.loadFile('renderer/index.html');
+
+//   win.on('ready-to-show', () => {
+//     win.show();
+//   })
+//   win.webContents.on('context-menu', (event, params) => {
+//     ctxMenu.popup(win, params.x, params.y)
+//   })
+
+//   win.webContents.openDevTools();
+// }
+
+app.whenReady().then(() => {
+  createMenu();
+  // createWindow();  
+
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   let win = new BrowserWindow({
@@ -120,9 +160,22 @@ const createWindow = () => {
   })
 
   // win.webContents.openDevTools();
-}
 
-app.whenReady().then(() => {
-  createMenu();
-  createWindow();  
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'Show / Hide',
+      click: () => {
+        win.isVisible() ? win.hide() : win.show();
+      }
+    },
+    {role: 'quit'}
+  ])
+
+  const tray = new Tray(path.resolve(__dirname, icon));
+  tray.setToolTip('exp-photo-table');
+  tray.setContextMenu(trayMenu);
+  // tray.on('click', () => {
+  //   win.isVisible() ? win.hide() : win.show();
+  // })
+
 });
