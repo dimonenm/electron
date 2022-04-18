@@ -11,12 +11,12 @@ body {
 
 .titlebar{
   position: absolute;
-  background-color: cadetblue;
+  background-color: #5f9ea0;
   height: 35px;
   width: 100%;
   top: 0;
   left: 0;
-  /* -webkit-app-region: drag; */
+  -webkit-app-region: drag;
 }
 
 .message {

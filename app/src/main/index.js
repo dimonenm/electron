@@ -1,4 +1,4 @@
-import { app, screen, BrowserWindow, Menu, MenuItem, Tray } from 'electron';
+import { app, screen, BrowserWindow, Menu, MenuItem, Tray, ipcMain } from 'electron';
 import path from 'path';
 import icon from '013 trayTemplate.png';
 
@@ -79,10 +79,10 @@ const template = [
 ]
 
 const ctxTemplate = [
-  {label: 'Op 1'},
-  {label: 'Op 2'},
-  {type: 'separator'},
-  {label: 'Op 3'},
+  { label: 'Op 1' },
+  { label: 'Op 2' },
+  { type: 'separator' },
+  { label: 'Op 3' },
 ]
 const ctxMenu = Menu.buildFromTemplate(ctxTemplate);
 
@@ -125,6 +125,8 @@ const createMenu = () => {
 //   win.webContents.openDevTools();
 // }
 
+
+
 app.whenReady().then(() => {
   createMenu();
   // createWindow();  
@@ -139,11 +141,12 @@ app.whenReady().then(() => {
     maxWidth: width,
     maxHeight: height,
     show: false,
-    // titleBarStyle: "hidden",
-    // titleBarOverlay: {
-    //   color: 'cadetblue',
-    //   symbolColor: '#000000'
-    // },
+    titleBarStyle: "hidden",
+    titleBarOverlay: {
+      color: '#5f9ea0',
+      symbolColor: '#000000',
+      height: 35
+    },
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -159,6 +162,15 @@ app.whenReady().then(() => {
     ctxMenu.popup(win, params.x, params.y)
   })
 
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.send('mainchannal', { message: 'App is Running' })
+  })
+
+  ipcMain.on('loaddata', () => {
+    const number = Math.random() * 10;
+    win.webContents.send('data', { number })
+  });
+
   // win.webContents.openDevTools();
 
   const trayMenu = Menu.buildFromTemplate([
@@ -168,14 +180,14 @@ app.whenReady().then(() => {
         win.isVisible() ? win.hide() : win.show();
       }
     },
-    {role: 'quit'}
+    { role: 'quit' }
   ])
 
   const tray = new Tray(path.resolve(__dirname, icon));
   tray.setToolTip('exp-photo-table');
   tray.setContextMenu(trayMenu);
-  // tray.on('click', () => {
-  //   win.isVisible() ? win.hide() : win.show();
-  // })
+  tray.on('click', () => {
+    win.isVisible() ? win.hide() : win.show();
+  })
 
 });
