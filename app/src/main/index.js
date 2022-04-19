@@ -1,4 +1,4 @@
-import { app, screen, BrowserWindow, Menu, MenuItem, Tray, ipcMain } from 'electron';
+import { app, screen, BrowserWindow, Menu, MenuItem, Tray, ipcMain, dialog } from 'electron';
 import path from 'path';
 import icon from '013 trayTemplate.png';
 
@@ -125,8 +125,6 @@ const createMenu = () => {
 //   win.webContents.openDevTools();
 // }
 
-
-
 app.whenReady().then(() => {
   createMenu();
   // createWindow();  
@@ -141,16 +139,17 @@ app.whenReady().then(() => {
     maxWidth: width,
     maxHeight: height,
     show: false,
-    titleBarStyle: "hidden",
-    titleBarOverlay: {
-      color: '#5f9ea0',
-      symbolColor: '#000000',
-      height: 35
-    },
+    // titleBarStyle: "hidden",
+    // titleBarOverlay: {
+    //   color: '#5f9ea0',
+    //   symbolColor: '#000000',
+    //   height: 35
+    // },
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      // nodeIntegration: true,
+      // contextIsolation: false,
+      // enableRemoteModule: true,
+      preload: path.join(app.getAppPath(), 'preload', 'index.js')
     }
   })
   win.loadFile('renderer/index.html');
@@ -171,7 +170,15 @@ app.whenReady().then(() => {
     win.webContents.send('data', { number })
   });
 
-  // win.webContents.openDevTools();
+  ipcMain.on('offline', () => {
+    console.log('App is offline');
+  })
+
+  ipcMain.on('online', () => {
+    console.log('App is online');
+  })
+
+  win.webContents.openDevTools({mode: 'detach'});
 
   const trayMenu = Menu.buildFromTemplate([
     {
@@ -190,4 +197,5 @@ app.whenReady().then(() => {
     win.isVisible() ? win.hide() : win.show();
   })
 
+  // dialog.showMessageBox({ message: 'ok' })
 });

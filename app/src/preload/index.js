@@ -9,3 +9,12 @@ contextBridge.exposeInMainWorld('MessagesAPI', {
     ipcRenderer.on('loaded', callback)
   }
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('offline', () => {
+    ipcRenderer.send('offline')
+  })
+  window.addEventListener('online', () => {
+    ipcRenderer.send('online')
+  })
+})
