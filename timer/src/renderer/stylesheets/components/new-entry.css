@@ -1,0 +1,29 @@
+.new-entry {
+  display: flex;
+  padding: 15px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.new-entry .details {
+  flex: 2;
+}
+
+.new-entry .actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.new-entry .trigger{
+  margin: 5px 0 0 10px;
+  cursor: pointer;
+}
+
+.new-entry textarea{
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 15px;
+  padding: 5px;
+}

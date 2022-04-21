@@ -7,12 +7,21 @@
     "email": ""
   },
   "repository": {},
-  "dependencies": {},
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.5",
     "bozon": "1.2.9",
     "jest": "27.5.1",
-    "spectron": "19.0.0"
+    "react-svg-loader": "^3.0.3",
+    "spectron": "19.0.0",
+    "webpack": "^5.72.0"
   },
   "build": {
     "appId": "com.electron.timer",
