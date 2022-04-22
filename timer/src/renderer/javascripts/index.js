@@ -5,6 +5,11 @@ import {App} from './components/App'
 
 require('application.css')
 
+// window.subscribeForEntries((_, data) => {
+//   console.log(data.entries);
+// })
+console.log(window);
+
 window.onload = () => {
   // ReactDOM.render(<App />, document.getElementById('root'))
   const container = document.getElementById('root');

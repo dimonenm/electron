@@ -1,8 +1,10 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron';
+import { Storage } from './storage';
 
 export default class TimerApp {
   constructor() {
+    this.storage = new Storage()
     this.subscribeForAppEvents()
     app.whenReady().then(() => this.createWindow())
   }
@@ -33,6 +35,11 @@ export default class TimerApp {
     })
 
     this.window.loadFile('renderer/index.html')
+
+    this.window.webContents.on('did-finish-load', () => {
+      // this.window.webContents.send('entries', { entries: this.storage.get('entries')})
+      this.window.webContents.send('entries', 'test mainProcess')
+    })
 
     this.window.webContents.openDevTools({ mode: 'detach' });
   }

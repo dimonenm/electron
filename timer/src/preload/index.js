@@ -1,11 +1,7 @@
-// https://electronjs.org/docs/tutorial/security
-// Preload File that should be loaded into browser window instead of
-// setting nodeIntegration: true for browser window
+import { ipcRenderer } from 'electron'
 
-import { contextBridge, ipcRenderer } from 'electron'
+window.subscribeForEntries = callback => {
+  ipcRenderer.on('entries', callback)
+}
 
-contextBridge.exposeInMainWorld('MessagesAPI', {
-  onLoaded: callback => {
-    ipcRenderer.on('loaded', callback)
-  }
-})
+// ipcRenderer.on('entries', () => console.log('subscribeForEntries'))
