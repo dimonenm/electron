@@ -38,7 +38,8 @@ export default class TimerApp {
 
     this.window.webContents.on('did-finish-load', () => {
       // this.window.webContents.send('entries', { entries: this.storage.get('entries')})
-      this.window.webContents.send('entries', 'test mainProcess')
+      const jsonStr = JSON.stringify({ entries: this.storage.get('entries') })
+      this.window.webContents.send('entries', jsonStr);
     })
 
     this.window.webContents.openDevTools({ mode: 'detach' });

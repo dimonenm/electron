@@ -5,10 +5,10 @@ import {App} from './components/App'
 
 require('application.css')
 
-// window.subscribeForEntries((_, data) => {
-//   console.log(data.entries);
-// })
-console.log(window);
+globalThis.subscribeForEntries.subscribe((_, data) => {
+  console.log(data);
+})
+// console.log(window);
 
 window.onload = () => {
   // ReactDOM.render(<App />, document.getElementById('root'))

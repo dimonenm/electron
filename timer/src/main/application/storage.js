@@ -30,7 +30,7 @@ export class Storage {
   file(key) {
     const file = path.join(this.directory, `${key}.json`)
     if (!existsSync(file)) {
-      writeFileSync(file, null, { flag: 'wx' })
+      writeFileSync(file, JSON.stringify({}), { flag: 'wx' })
     }
     return file
   }
