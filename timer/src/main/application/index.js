@@ -49,7 +49,7 @@ export default class TimerApp {
       this.window = null
     })
 
-    this.window.webContents.openDevTools({ mode: 'detach' });
+    // this.window.webContents.openDevTools({ mode: 'detach' });
   }
 
   subscribeForAppEvents() {

@@ -1,14 +1,14 @@
 import React from "react";
 
-export const Title = () => {
+export const Title = ({title, onChange}) => {
   return (
     <div className="details">
       <textarea
-        value=""
+        value={title}
         cols="0"
         rows="1"
         placeholder="Start new activity"
-        onChange={() => { }}
+        onChange={e => onChange(e.target.value)}
       ></textarea>
     </div>
   )

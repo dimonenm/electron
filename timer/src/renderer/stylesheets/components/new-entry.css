@@ -20,6 +20,23 @@
   cursor: pointer;
 }
 
+.new-entry .trigger svg path {
+  fill: #555;
+}
+
+.new-entry .trigger:hover svg path {
+  fill: #303952;
+  transition: fill .2s ease;
+}
+
+.new-entry .trigger.disabled svg path {
+  fill: #999;
+}
+
+.new-entry .trigger.disabled {
+  cursor: default;
+}
+
 .new-entry textarea{
   border: none;
   outline: none;
