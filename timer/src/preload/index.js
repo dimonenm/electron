@@ -7,3 +7,9 @@ contextBridge.exposeInMainWorld('subscribeForEntries', {
     ipcRenderer.on('entries', callback)
   }
 })
+
+contextBridge.exposeInMainWorld('subscribeForTimer', {
+  subscribe: callback => {
+    ipcRenderer.on('tick', callback)
+  }
+})

@@ -1,9 +1,11 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron';
 import { Storage } from './storage';
+import { Timer } from './timer';
 
 export default class TimerApp {
   constructor() {
+    this.timer = new Timer()
     this.storage = new Storage()
     this.subscribeForAppEvents()
     app.whenReady().then(() => this.createWindow())
@@ -30,16 +32,21 @@ export default class TimerApp {
       }
     })
 
-    this.window.on('closed', () => {
-      this.window = null
-    })
-
     this.window.loadFile('renderer/index.html')
+
+    this.timer.onChange = () => {
+      this.window.webContents.send('tick', JSON.stringify({ time: this.timer.get() }))
+    }
 
     this.window.webContents.on('did-finish-load', () => {
       // this.window.webContents.send('entries', { entries: this.storage.get('entries')})
-      const jsonStr = JSON.stringify({ entries: this.storage.get('entries') })
-      this.window.webContents.send('entries', jsonStr);
+      // const jsonStr = JSON.stringify({ entries: this.storage.get('entries') })
+      this.window.webContents.send('entries', JSON.stringify({ entries: this.storage.get('entries') }));
+    })
+
+    this.window.on('closed', () => {
+      this.timer.onChange = null
+      this.window = null
     })
 
     this.window.webContents.openDevTools({ mode: 'detach' });
