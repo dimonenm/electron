@@ -11,5 +11,12 @@ contextBridge.exposeInMainWorld('subscribeForEntries', {
 contextBridge.exposeInMainWorld('subscribeForTimer', {
   subscribe: callback => {
     ipcRenderer.on('tick', callback)
+  },
+  startTimer: () => {
+    ipcRenderer.send('timer:start')
+  },
+  stopTimer: () => {
+    ipcRenderer.send('timer:stop')
+
   }
 })

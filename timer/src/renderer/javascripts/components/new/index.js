@@ -17,9 +17,13 @@ export const New = () => {
 
   const handleStartTimer = () => {
     setRunning(true)
+    globalThis.subscribeForTimer.startTimer()
   }
   const handleStopTimer = () => {
     setRunning(false)
+    setTime(0)
+    setTitle('')
+    globalThis.subscribeForTimer.stopTimer()
   }
 
   return (

@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from 'classnames'
+import { durationToTime } from "../../helpers/time";
 import PlayIcon from 'play.svg'
 import StopIcon from 'stop.svg'
 
@@ -12,7 +13,7 @@ export const Aclions = ({ disabled, duration, running, onStartTimer, onStopTimer
 
   return (
     <div className="actions">
-      <div className="time">{duration}</div>
+      <div className="time">{durationToTime(duration)}</div>
       <div
         className={classnames('trigger', { disabled })}
         onClick={onClick}
