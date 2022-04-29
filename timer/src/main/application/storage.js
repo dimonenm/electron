@@ -20,17 +20,18 @@ export class Storage {
   }
 
   read(key) {
-    return JSON.parse(readFileSync(this.file(key)).toString('utf-8'))
+    return JSON.parse(readFileSync(this.file(key)))
+    // return JSON.parse(readFileSync(this.file(key)).toString('utf-8'))
   }
 
-  write(key, data) {
+  write(key, data) {  
     return writeFileSync(this.file(key), JSON.stringify(data))
   }
 
-  file(key) {
+  file(key) {    
     const file = path.join(this.directory, `${key}.json`)
     if (!existsSync(file)) {
-      writeFileSync(file, JSON.stringify({}), { flag: 'wx' })
+      writeFileSync(file, '[]', { flag: 'wx' })
     }
     return file
   }

@@ -4,7 +4,7 @@
   border-bottom: 1px solid #eee;
 }
 
-.entry:hover{
+.entry:hover {
   background-color: #f7f7f7;
   cursor: default;
   transition: background-color 0.2s ease;
@@ -23,15 +23,21 @@
   align-items: center;
 }
 
-.entry .primary{
+.entry .primary {
   margin-bottom: 8px;
 }
 
-.entry .secondary{
+.entry .secondary {
   font-size: 14px;
   color: #a8a8a8;
 }
 
-.entry .time{
+.entry .time {
   color: #777;
+}
+
+.empty-state {
+  padding: 20px;
+  text-align: center;
+  color: #a8a8a8;
 }

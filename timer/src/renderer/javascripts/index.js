@@ -5,19 +5,25 @@ import { App } from './components/App'
 
 require('application.css')
 
-globalThis.subscribeForEntries.subscribe((_, data) => {
-  renderApp(JSON.parse(data).entries) ;
-})
 
-const renderApp = (entries = []) => {
+
+
+
+window.onload = () => {
+  // ReactDOM.render(<App />, document.getElementById('root'))
   const container = document.getElementById('root');
-  const root = createRoot(container);
-  root.render(<App tab="home" entries={entries} />);
-}
+  const root = createRoot(container); 
+  root.render(<App tab="home" entries={[]} />);
+  
 
-// window.onload = () => {
-//   // ReactDOM.render(<App />, document.getElementById('root'))
-//   const container = document.getElementById('root');
-//   const root = createRoot(container); 
-//   root.render(<App tab="home" />);
-// }
+  globalThis.subscribeForEntries.subscribe((_, data) => {
+    // renderApp(JSON.parse(data).entries);
+    renderApp(data.entries);
+  })
+
+  const renderApp = (entries = []) => {
+    // const container = document.getElementById('root');
+    // const root = createRoot(container);
+    root.render(<App tab="home" entries={entries} />);
+  }
+}

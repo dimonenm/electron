@@ -8,7 +8,7 @@ export const App = ({ entries }) => {
   return (
     <>
       <New />
-      <Entries />
+      <Entries entries={entries}/>
     </>
   )
 }

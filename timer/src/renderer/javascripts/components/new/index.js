@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import { nanoid } from 'nanoid'
+import { DateTime } from 'luxon'
 import { Title } from "./title";
 import { Aclions } from "./actions";
 
@@ -20,6 +21,15 @@ export const New = () => {
     globalThis.subscribeForTimer.startTimer()
   }
   const handleStopTimer = () => {
+    globalThis.inputOutput.save(
+      {
+        id: nanoid(),
+        duration: time,
+        title: title,
+        project: 'none',
+        createdAt: DateTime.local().toISO()
+      }
+    )
     setRunning(false)
     setTime(0)
     setTitle('')

@@ -1,14 +1,15 @@
 import React from "react";
+import { durationToTime } from "../../helpers/time";
 
-export const Item = () => {
+export const Item = ({title, duration, project}) => {
   return (
     <div className="entry">
       <div className="details">
-        <div className="primary">First entry</div>
-        <div className="secondary">My Project</div>
+        <div className="primary">{title}</div>
+        <div className="secondary">{ project }</div>
       </div>
       <div className="actions">
-        <div className="time">00:00:00</div>
+        <div className="time">{durationToTime(duration)}</div>
       </div>
     </div>
   )
