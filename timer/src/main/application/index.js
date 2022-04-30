@@ -40,6 +40,8 @@ export default class TimerApp {
     }
 
     this.window.webContents.on('did-finish-load', () => {
+      // console.log('main data1', this.storage.get('entries'));
+      // console.log('main data2', JSON.stringify({ entries: this.storage.get('entries') }));
       this.window.webContents.send('entries', JSON.stringify({ entries: this.storage.get('entries') }));
     })
 
@@ -74,9 +76,13 @@ export default class TimerApp {
     })
     ipcMain.on('save', (_, data) => {
       const entries = this.storage.get('entries') || []
+      // console.log('entries to save: ', entries);
+      // console.log('data to save: ', data);
+
       entries.push(data)
       this.storage.set('entries', entries)
-      this.window.webContents.send('entries', { entries })
+      this.window.webContents.send('entries', JSON.stringify({ entries }))
+      // this.window.webContents.send('entries', { entries })
     })
   }
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { orderBy } from 'lodash'
 import { Item } from './Item'
 
 export const Entries = ({ entries }) => {
@@ -6,7 +7,7 @@ export const Entries = ({ entries }) => {
 
   return <div className="entries">
     {entries.length === 0 && <div className="empty-state">no entries</div>}
-    {entries && entries.map(entry =>
+    {entries && orderBy(entries, 'createdAt', 'desc').map(entry =>
       <Item
         key={entry.id}
         title={entry.title}
