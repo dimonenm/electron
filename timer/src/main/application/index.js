@@ -2,9 +2,12 @@ import path from 'path'
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { Storage } from './storage';
 import { Timer } from './timer';
+import { nanoid } from 'nanoid';
+import { DateTime } from 'luxon';
 
 export default class TimerApp {
   constructor() {
+    this.entry = {}
     this.timer = new Timer()
     this.storage = new Storage()
     this.subscribeForAppEvents()
@@ -36,12 +39,10 @@ export default class TimerApp {
     this.window.loadFile('renderer/index.html')
 
     this.timer.onChange = () => {
-      this.window.webContents.send('tick', JSON.stringify({ time: this.timer.get() }))
+      this.window.webContents.send('tick', JSON.stringify({ time: this.timer.get(), title: this.entry.title }))
     }
 
     this.window.webContents.on('did-finish-load', () => {
-      // console.log('main data1', this.storage.get('entries'));
-      // console.log('main data2', JSON.stringify({ entries: this.storage.get('entries') }));
       this.window.webContents.send('entries', JSON.stringify({ entries: this.storage.get('entries') }));
     })
 
@@ -68,21 +69,29 @@ export default class TimerApp {
   }
 
   subscribeForIPC() {
-    ipcMain.on('timer:start', () => {
+    ipcMain.on('timer:start', (_, data) => {      
       this.timer.start()
+      this.entry = {
+        id: nanoid(),
+        duration: 0,
+        title: data.title,
+        project: 'none',
+        createdAt: DateTime.local().toISO()
+      }
     })
     ipcMain.on('timer:stop', () => {
-      this.timer.stop()
-    })
-    ipcMain.on('save', (_, data) => {
+      const duration = this.timer.stop()
       const entries = this.storage.get('entries') || []
-      // console.log('entries to save: ', entries);
-      // console.log('data to save: ', data);
-
-      entries.push(data)
+      this.entry.duration = duration
+      entries.push(this.entry)
       this.storage.set('entries', entries)
-      this.window.webContents.send('entries', JSON.stringify({ entries }))
-      // this.window.webContents.send('entries', { entries })
+      this.window.webContents.send('entries', JSON.stringify({ entries }))      
     })
+    // ipcMain.on('save', (_, data) => {
+    //   const entries = this.storage.get('entries') || []
+    //   entries.push(data)
+    //   this.storage.set('entries', entries)
+    //   this.window.webContents.send('entries', JSON.stringify({ entries }))
+    // })
   }
 }

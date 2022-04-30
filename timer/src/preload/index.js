@@ -12,8 +12,8 @@ contextBridge.exposeInMainWorld('subscribeForTimer', {
   subscribe: callback => {
     ipcRenderer.on('tick', callback)
   },
-  startTimer: () => {
-    ipcRenderer.send('timer:start')
+  startTimer: title => {
+    ipcRenderer.send('timer:start', { title })
   },
   stopTimer: () => {
     ipcRenderer.send('timer:stop')
@@ -21,9 +21,9 @@ contextBridge.exposeInMainWorld('subscribeForTimer', {
   }
 })
 
-contextBridge.exposeInMainWorld('inputOutput', {
-  save: data => {
-    console.log('inputOutput', data);
-    ipcRenderer.send('save', data)
-  }
-})
+// contextBridge.exposeInMainWorld('inputOutput', {
+//   save: data => {
+//     console.log('inputOutput', data);
+//     ipcRenderer.send('save', data)
+//   }
+// })

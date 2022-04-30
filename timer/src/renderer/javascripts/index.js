@@ -13,10 +13,7 @@ window.onload = () => {
   console.log('first load');
   
   globalThis.subscribeForEntries.subscribe((_, data) => {
-    console.log('second load');
-    console.log('second load data', JSON.parse(data).entries);
     renderApp(JSON.parse(data).entries);
-    // renderApp(data.entries);
   })
 
   const renderApp = (entries = []) => {
