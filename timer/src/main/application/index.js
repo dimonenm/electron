@@ -87,11 +87,5 @@ export default class TimerApp {
       this.storage.set('entries', entries)
       this.window.webContents.send('entries', JSON.stringify({ entries }))      
     })
-    // ipcMain.on('save', (_, data) => {
-    //   const entries = this.storage.get('entries') || []
-    //   entries.push(data)
-    //   this.storage.set('entries', entries)
-    //   this.window.webContents.send('entries', JSON.stringify({ entries }))
-    // })
   }
 }

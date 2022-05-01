@@ -20,10 +20,3 @@ contextBridge.exposeInMainWorld('subscribeForTimer', {
 
   }
 })
-
-// contextBridge.exposeInMainWorld('inputOutput', {
-//   save: data => {
-//     console.log('inputOutput', data);
-//     ipcRenderer.send('save', data)
-//   }
-// })
